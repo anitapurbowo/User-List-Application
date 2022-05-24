@@ -16,7 +16,7 @@ class Service {
     }
   }
 
-  Future postData(
+  Future<bool> postData(
     String pnama,
     String pavatar,
     String palamat,
@@ -52,6 +52,33 @@ class Service {
       return jsonResponse;
     } else {
       throw Exception('Failed to get Data');
+    }
+  }
+
+  Future<bool> updateData(
+    String pid,
+    String pnama,
+    String pavatar,
+    String palamat,
+    String pemail,
+    String ppekerjaan,
+    String pquote,
+  ) async {
+    final response = await http.put(
+        Uri.parse('https://6283762138279cef71d77f41.mockapi.io/api/v1/data2$pid'),
+        body: {
+          "nama": pnama,
+          "avatar": pavatar,
+          "alamat": palamat,
+          "email": pemail,
+          "pekerjaan": ppekerjaan,
+          "quote": pquote,
+        });
+
+    if (response.statusCode == 200) {
+      return true;
+    } else {
+      throw Exception('Failed to update Data');
     }
   }
 

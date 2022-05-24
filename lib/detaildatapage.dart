@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:networking/dataclass.dart';
+import 'editdatapage.dart';
 
 class Detail extends StatefulWidget {
   final cData data;
@@ -57,16 +58,23 @@ class _DetailState extends State<Detail> {
                 children: [
                   Expanded(
                     child: Padding(
-                      padding: const EdgeInsets.fromLTRB(8.0,0,8,0),
+                      padding: const EdgeInsets.fromLTRB(8.0, 0, 8, 0),
                       child: ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () async {
+                          cData data = await Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => EditData(),
+                            ),
+                          );
+                        },
                         child: Text("Edit"),
                       ),
                     ),
                   ),
                   Expanded(
                     child: Padding(
-                      padding: const EdgeInsets.fromLTRB(8.0,0,8,0),
+                      padding: const EdgeInsets.fromLTRB(8.0, 0, 8, 0),
                       child: ElevatedButton(
                         onPressed: () {
                           Navigator.pop(context);
