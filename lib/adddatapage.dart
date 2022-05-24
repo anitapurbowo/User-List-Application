@@ -72,7 +72,7 @@ class _AddDataState extends State<AddData> {
               ElevatedButton(
                   onPressed: () {
                     ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text('Data Berhasil Dihapus')));
+                        SnackBar(content: Text('Data Berhasil Ditambahkan')));
                     cData data = cData(
                         cid: "",
                         cnama: _tfNama.text,

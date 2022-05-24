@@ -9,7 +9,7 @@ class Detail extends StatefulWidget {
 
   const Detail({
     Key? key,
-    required this.data,
+    required this.data
   }) : super(key: key);
 
   @override
@@ -61,10 +61,10 @@ class _DetailState extends State<Detail> {
                       padding: const EdgeInsets.fromLTRB(8.0, 0, 8, 0),
                       child: ElevatedButton(
                         onPressed: () async {
-                          cData data = await Navigator.push(
+                          await Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => EditData(),
+                              builder: (context) => EditData(data: widget.data),
                             ),
                           );
                         },

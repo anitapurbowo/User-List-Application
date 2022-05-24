@@ -1,14 +1,21 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/material.dart';
+import 'apiservices.dart';
 import 'dataclass.dart';
 
 class EditData extends StatefulWidget {
-  const EditData({Key? key}) : super(key: key);
+  final cData data;
+
+  const EditData({Key? key, required this.data}) : super(key: key);
 
   @override
   State<EditData> createState() => _EditDataState();
 }
 
 class _EditDataState extends State<EditData> {
+  Service serviceAPI = Service();
+
   final TextEditingController _tfNama = TextEditingController();
   final TextEditingController _tfAvatar = TextEditingController();
   final TextEditingController _tfAlamat = TextEditingController();
@@ -18,6 +25,12 @@ class _EditDataState extends State<EditData> {
 
   @override
   Widget build(BuildContext context) {
+    _tfNama.text = widget.data.cnama;
+    _tfAvatar.text = widget.data.cavatar;
+    _tfAlamat.text = widget.data.calamat;
+    _tfEmail.text = widget.data.cemail;
+    _tfPekerjaan.text = widget.data.cpekerjaan;
+    _tfQuote.text = widget.data.cquote;
     return MaterialApp(
       title: "Widget Catalog",
       home: Scaffold(
@@ -28,8 +41,13 @@ class _EditDataState extends State<EditData> {
           padding: EdgeInsets.all(16),
           child: Column(
             children: [
-              CircleAvatar(
-                backgroundImage: NetworkImage(""),
+              ClipOval(
+                child: Image.network(
+                  widget.data.cavatar,
+                  width: 100,
+                  height: 100,
+                  fit: BoxFit.cover,
+                ),
               ),
               TextField(
                 controller: _tfNama,
@@ -72,17 +90,18 @@ class _EditDataState extends State<EditData> {
               ),
               ElevatedButton(
                   onPressed: () {
+                    updateData(
+                      widget.data.cid,
+                      _tfNama.text,
+                      _tfAvatar.text,
+                      _tfAlamat.text,
+                      _tfEmail.text,
+                      _tfPekerjaan.text,
+                      _tfQuote.text,
+                    );
                     ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(content: Text('Data Berhasil Dihapus')));
-                    cData data = cData(
-                        cid: "",
-                        cnama: _tfNama.text,
-                        cavatar: _tfAvatar.text,
-                        calamat: _tfAlamat.text,
-                        cemail: _tfEmail.text,
-                        cpekerjaan: _tfPekerjaan.text,
-                        cquote: _tfQuote.text);
-                    Navigator.pop(context, data);
+                    Navigator.pop(context);
                   },
                   child: Text('Submit')),
               SizedBox(
@@ -99,5 +118,20 @@ class _EditDataState extends State<EditData> {
         ),
       ),
     );
+  }
+
+  void updateData(String id, String nama, String avatar, String alamat,
+      String email, String pekerjaan, String quote) async {
+    bool response = await serviceAPI.updateData(
+        id, nama, avatar, alamat, email, pekerjaan, quote);
+    if (response == true) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            'Data berhasil ditambahkan',
+          ),
+        ),
+      );
+    }
   }
 }

@@ -78,6 +78,9 @@ class _MyAppState extends State<MyApp> {
                             },
                             onDismissed: (direction) {
                               deleteData(isiData[index].cid);
+                              setState(() {
+                                isiData.removeAt(index);
+                              });
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(
                                   content: Text(
@@ -85,9 +88,6 @@ class _MyAppState extends State<MyApp> {
                                   ),
                                 ),
                               );
-                              setState(() {
-                                isiData.removeAt(index);
-                              });
                             },
                             child: ListTile(
                               title: Text(isiData[index].cnama),
@@ -102,7 +102,8 @@ class _MyAppState extends State<MyApp> {
                                   Text("ID : " + isiData[index].cid),
                                   Text("Alamat : " + isiData[index].calamat),
                                   Text("Email : " + isiData[index].cemail),
-                                  Text("Pekerjaan : " + isiData[index].cpekerjaan),
+                                  Text("Pekerjaan : " +
+                                      isiData[index].cpekerjaan),
                                   Text("Quote : " + isiData[index].cquote),
                                 ],
                               ),
@@ -113,15 +114,16 @@ class _MyAppState extends State<MyApp> {
                                   context,
                                   MaterialPageRoute(
                                     builder: (context) {
-                                      return Detail(
-                                        data: isiData[index],
-                                      );
+                                      return Detail(data: isiData[index]);
                                     },
                                   ),
                                 );
                               },
                               onLongPress: () {
                                 deleteData(isiData[index].cid);
+                                setState(() {
+                                  isiData.removeAt(index);
+                                });
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(
                                     content: Text(
@@ -129,9 +131,6 @@ class _MyAppState extends State<MyApp> {
                                     ),
                                   ),
                                 );
-                                setState(() {
-                                  isiData.removeAt(index);
-                                });
                               },
                             ),
                           );
@@ -155,12 +154,22 @@ class _MyAppState extends State<MyApp> {
             cData data = await Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => AddData(),
+                builder: (context) {
+                  return AddData();
+                }
               ),
             );
+            log("berhasil 1");
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(
+                  'Data ${data.cnama} berhasil dihapus',
+                ),
+              ),
+            );
+            log("berhasil 2");
             addData(data.cnama, data.cavatar, data.calamat, data.cemail,
                 data.cpekerjaan, data.cquote);
-
             //tambahData();
           },
           child: Icon(Icons.add),
@@ -202,16 +211,12 @@ class _MyAppState extends State<MyApp> {
     bool response = await serviceAPI.postData(
         nama, avatar, alamat, email, pekerjaan, quote);
     if (response == true) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(
-            'Data berhasil ditambahkan',
-          ),
-        ),
-      );
       setState(() {
         listData = serviceAPI.getAllData();
       });
+      log("Data berhasil ditambahkan");
+    } else {
+      log("error = data gagal ditambahkan");
     }
   }
 }
