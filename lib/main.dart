@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:networking/adddatapage.dart';
@@ -42,13 +44,14 @@ class _MyAppState extends State<MyApp> {
         ),
         body: Column(
           children: [
-            Container(
-              child: FutureBuilder<List<cData>>(
-                future: listData,
-                builder: (context, snapshot) {
-                  if (snapshot.hasData) {
-                    List<cData> isiData = snapshot.data!;
-                    return Expanded(
+            FutureBuilder<List<cData>>(
+              future: listData,
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  List<cData> isiData = snapshot.data!;
+                  return Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.only(bottom: 8),
                       child: ListView.builder(
                         itemCount: isiData.length,
                         itemBuilder: (context, index) {
@@ -93,10 +96,19 @@ class _MyAppState extends State<MyApp> {
                                   isiData[index].cavatar,
                                 ),
                               ),
-                              subtitle: Text(isiData[index].cpekerjaan),
+                              subtitle: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text("ID : " + isiData[index].cid),
+                                  Text("Alamat : " + isiData[index].calamat),
+                                  Text("Email : " + isiData[index].cemail),
+                                  Text("Pekerjaan : " + isiData[index].cpekerjaan),
+                                  Text("Quote : " + isiData[index].cquote),
+                                ],
+                              ),
                               onTap: () {
                                 showData(isiData[index].cid);
-                    
+
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
@@ -125,33 +137,33 @@ class _MyAppState extends State<MyApp> {
                           );
                         },
                       ),
-                    );
-                  } else if (snapshot.hasError) {
-                    return Text("${snapshot.error}");
-                  }
-                  return const CircularProgressIndicator();
-                },
-              ),
-            ),
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                minimumSize: const Size.fromHeight(45),
-              ),
-              onPressed: () async {
-                cData data = await Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => AddData(),
-                  ),
+                    ),
+                  );
+                } else if (snapshot.hasError) {
+                  return Text("${snapshot.error}");
+                }
+                return Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: const CircularProgressIndicator(),
                 );
-                addData(data.cnama, data.cavatar, data.calamat, data.cemail,
-                    data.cpekerjaan, data.cquote);
-
-                //tambahData();
               },
-              child: Text('Tambah Data'),
             ),
           ],
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () async {
+            cData data = await Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => AddData(),
+              ),
+            );
+            addData(data.cnama, data.cavatar, data.calamat, data.cemail,
+                data.cpekerjaan, data.cquote);
+
+            //tambahData();
+          },
+          child: Icon(Icons.add),
         ),
       ),
     );

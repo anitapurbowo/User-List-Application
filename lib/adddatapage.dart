@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/material.dart';
 import 'dataclass.dart';
 
@@ -9,12 +11,12 @@ class AddData extends StatefulWidget {
 }
 
 class _AddDataState extends State<AddData> {
-  TextEditingController _tfNama = TextEditingController();
-  TextEditingController _tfAvatar = TextEditingController();
-  TextEditingController _tfAlamat = TextEditingController();
-  TextEditingController _tfEmail = TextEditingController();
-  TextEditingController _tfPekerjaan = TextEditingController();
-  TextEditingController _tfQuote = TextEditingController();
+  final TextEditingController _tfNama = TextEditingController();
+  final TextEditingController _tfAvatar = TextEditingController();
+  final TextEditingController _tfAlamat = TextEditingController();
+  final TextEditingController _tfEmail = TextEditingController();
+  final TextEditingController _tfPekerjaan = TextEditingController();
+  final TextEditingController _tfQuote = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -65,7 +67,7 @@ class _AddDataState extends State<AddData> {
                 ),
               ),
               SizedBox(
-                height: 40,
+                height: 20,
               ),
               ElevatedButton(
                   onPressed: () {

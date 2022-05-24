@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/material.dart';
 import 'package:networking/dataclass.dart';
 
@@ -27,32 +29,53 @@ class _DetailState extends State<Detail> {
           child: Column(
             children: [
               Card(
-                child: ListTile(
-                  title: Text(widget.data.cnama),
-                  leading: CircleAvatar(
-                    backgroundImage: NetworkImage(widget.data.cavatar),
-                  ),
-                  subtitle: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text("ID : " + widget.data.cid),
-                      Text("Nama : " + widget.data.cnama),
-                      Text("Alamat : " + widget.data.calamat),
-                      Text("Email : " + widget.data.cemail),
-                      Text("Pekerjaan : " + widget.data.cpekerjaan),
-                      Text("Quote : " + widget.data.cquote),
-                    ],
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: ListTile(
+                    title: Text(widget.data.cnama),
+                    leading: CircleAvatar(
+                      backgroundImage: NetworkImage(widget.data.cavatar),
+                    ),
+                    subtitle: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text("ID : " + widget.data.cid),
+                        Text("Nama : " + widget.data.cnama),
+                        Text("Alamat : " + widget.data.calamat),
+                        Text("Email : " + widget.data.cemail),
+                        Text("Pekerjaan : " + widget.data.cpekerjaan),
+                        Text("Quote : " + widget.data.cquote),
+                      ],
+                    ),
                   ),
                 ),
               ),
               SizedBox(
                 height: 8,
               ),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                child: Text("Back"),
+              Row(
+                children: [
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(8.0,0,8,0),
+                      child: ElevatedButton(
+                        onPressed: () {},
+                        child: Text("Edit"),
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(8.0,0,8,0),
+                      child: ElevatedButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        child: Text("Back"),
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ],
           ),
