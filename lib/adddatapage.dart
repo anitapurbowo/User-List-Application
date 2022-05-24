@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'dataclass.dart';
-import 'main.dart';
 
 class AddData extends StatefulWidget {
   const AddData({Key? key}) : super(key: key);

@@ -42,14 +42,14 @@ class _MyAppState extends State<MyApp> {
         ),
         body: Column(
           children: [
-            Expanded(
-              child: Container(
-                child: FutureBuilder<List<cData>>(
-                  future: listData,
-                  builder: (context, snapshot) {
-                    if (snapshot.hasData) {
-                      List<cData> isiData = snapshot.data!;
-                      return ListView.builder(
+            Container(
+              child: FutureBuilder<List<cData>>(
+                future: listData,
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    List<cData> isiData = snapshot.data!;
+                    return Expanded(
+                      child: ListView.builder(
                         itemCount: isiData.length,
                         itemBuilder: (context, index) {
                           return Dismissible(
@@ -96,7 +96,7 @@ class _MyAppState extends State<MyApp> {
                               subtitle: Text(isiData[index].cpekerjaan),
                               onTap: () {
                                 showData(isiData[index].cid);
-
+                    
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
@@ -124,13 +124,13 @@ class _MyAppState extends State<MyApp> {
                             ),
                           );
                         },
-                      );
-                    } else if (snapshot.hasError) {
-                      return Text("${snapshot.error}");
-                    }
-                    return const CircularProgressIndicator();
-                  },
-                ),
+                      ),
+                    );
+                  } else if (snapshot.hasError) {
+                    return Text("${snapshot.error}");
+                  }
+                  return const CircularProgressIndicator();
+                },
               ),
             ),
             ElevatedButton(

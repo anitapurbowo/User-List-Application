@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:networking/dataclass.dart';
-import 'apiservices.dart';
-import 'main.dart';
 
 class Detail extends StatefulWidget {
   final cData data;
