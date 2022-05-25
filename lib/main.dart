@@ -159,6 +159,9 @@ class _MyAppState extends State<MyApp> {
                 }
               ),
             );
+            addData(data.cnama, data.cavatar, data.calamat, data.cemail,
+                data.cpekerjaan, data.cquote);
+            //tambahData();
           },
           child: Icon(Icons.add),
         ),
