@@ -71,16 +71,20 @@ class _AddDataState extends State<AddData> {
               ),
               ElevatedButton(
                   onPressed: () {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text('Data Berhasil Ditambahkan')));
                     cData data = cData(
-                        cid: "",
-                        cnama: _tfNama.text,
-                        cavatar: _tfAvatar.text,
-                        calamat: _tfAlamat.text,
-                        cemail: _tfEmail.text,
-                        cpekerjaan: _tfPekerjaan.text,
-                        cquote: _tfQuote.text);
+                      cid: "",
+                      cnama: _tfNama.text,
+                      cavatar: _tfAvatar.text,
+                      calamat: _tfAlamat.text,
+                      cemail: _tfEmail.text,
+                      cpekerjaan: _tfPekerjaan.text,
+                      cquote: _tfQuote.text,
+                    );
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text('Data Berhasil Ditambahkan'),
+                      ),
+                    );
                     Navigator.pop(context, data);
                   },
                   child: Text('Submit')),

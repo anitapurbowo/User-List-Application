@@ -159,34 +159,11 @@ class _MyAppState extends State<MyApp> {
                 }
               ),
             );
-            log("berhasil 1");
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text(
-                  'Data ${data.cnama} berhasil dihapus',
-                ),
-              ),
-            );
-            log("berhasil 2");
-            addData(data.cnama, data.cavatar, data.calamat, data.cemail,
-                data.cpekerjaan, data.cquote);
-            //tambahData();
           },
           child: Icon(Icons.add),
         ),
       ),
     );
-  }
-
-  void tambahData() async {
-    bool response = await serviceAPI.postData(
-        'pnama', 'pavatar', 'palamat', 'pemail', 'ppekerjaan', 'pquote');
-
-    if (response == true) {
-      setState(() {
-        listData = serviceAPI.getAllData();
-      });
-    }
   }
 
   void showData(String id) async {

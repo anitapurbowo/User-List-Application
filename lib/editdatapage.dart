@@ -1,5 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'apiservices.dart';
 import 'dataclass.dart';
@@ -100,7 +102,10 @@ class _EditDataState extends State<EditData> {
                       _tfQuote.text,
                     );
                     ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text('Data Berhasil Dihapus')));
+                      SnackBar(
+                        content: Text('Data Berhasil Dihapus'),
+                      ),
+                    );
                     Navigator.pop(context);
                   },
                   child: Text('Submit')),
@@ -120,18 +125,29 @@ class _EditDataState extends State<EditData> {
     );
   }
 
-  void updateData(String id, String nama, String avatar, String alamat,
-      String email, String pekerjaan, String quote) async {
+  void updateData(
+    String id,
+    String nama,
+    String avatar,
+    String alamat,
+    String email,
+    String pekerjaan,
+    String quote,
+  ) async {
     bool response = await serviceAPI.updateData(
-        id, nama, avatar, alamat, email, pekerjaan, quote);
+      id,
+      nama,
+      avatar,
+      alamat,
+      email,
+      pekerjaan,
+      quote,
+    );
+    
     if (response == true) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(
-            'Data berhasil ditambahkan',
-          ),
-        ),
-      );
+      log("Data ${nama} berhasil di edit");
+    } else {
+      log("error = edit data ${nama}");
     }
   }
 }
