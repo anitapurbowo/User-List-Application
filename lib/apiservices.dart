@@ -66,7 +66,7 @@ class Service {
     String pquote,
   ) async {
     final response = await http.put(
-        Uri.parse('https://6283762138279cef71d77f41.mockapi.io/api/v1/data2$pid'),
+        Uri.parse('https://6283762138279cef71d77f41.mockapi.io/api/v1/data2/$pid'),
         body: {
           "nama": pnama,
           "avatar": pavatar,
