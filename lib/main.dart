@@ -30,15 +30,18 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     // TODO: implement initState
+    log('a');
     super.initState();
     listData = serviceAPI.getAllData();
   }
 
   @override
   Widget build(BuildContext context) {
+    final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
     return MaterialApp(
       title: "Widget Catalog",
       home: Scaffold(
+        key: scaffoldKey,
         appBar: AppBar(
           title: Text("Coba Widget"),
         ),
@@ -77,6 +80,7 @@ class _MyAppState extends State<MyApp> {
                               }
                             },
                             onDismissed: (direction) {
+                              String nama = isiData[index].cnama;
                               deleteData(isiData[index].cid);
                               setState(() {
                                 isiData.removeAt(index);
@@ -84,7 +88,7 @@ class _MyAppState extends State<MyApp> {
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(
                                   content: Text(
-                                    'Data ${isiData[index].cnama} berhasil dihapus',
+                                    'Data ${nama} berhasil dihapus',
                                   ),
                                 ),
                               );
@@ -107,10 +111,10 @@ class _MyAppState extends State<MyApp> {
                                   Text("Quote : " + isiData[index].cquote),
                                 ],
                               ),
-                              onTap: () {
+                              onTap: ()  async {
                                 showData(isiData[index].cid);
 
-                                Navigator.push(
+                                final val =  await Navigator.push(
                                   context,
                                   MaterialPageRoute(
                                     builder: (context) {
@@ -118,16 +122,24 @@ class _MyAppState extends State<MyApp> {
                                     },
                                   ),
                                 );
+                                if (val == '1') {
+                                  setState(() {
+                                    listData = serviceAPI.getAllData();
+                                  });
+                                }
                               },
                               onLongPress: () {
+                                String nama = isiData[index].cnama;
                                 deleteData(isiData[index].cid);
                                 setState(() {
                                   isiData.removeAt(index);
                                 });
-                                ScaffoldMessenger.of(context).showSnackBar(
+                                ScaffoldMessenger.of(
+                                        scaffoldKey.currentContext!)
+                                    .showSnackBar(
                                   SnackBar(
                                     content: Text(
-                                      'Data ${isiData[index].cnama} berhasil dihapus',
+                                      'Data ${nama} berhasil dihapus',
                                     ),
                                   ),
                                 );
@@ -151,17 +163,17 @@ class _MyAppState extends State<MyApp> {
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () async {
-            cData data = await Navigator.push(
+            final val = await Navigator.push(
               context,
-              MaterialPageRoute(
-                builder: (context) {
-                  return AddData();
-                }
-              ),
+              MaterialPageRoute(builder: (context) {
+                return AddData();
+              }),
             );
-            addData(data.cnama, data.cavatar, data.calamat, data.cemail,
-                data.cpekerjaan, data.cquote);
-            //tambahData();
+            if (val == '1') {
+              setState(() {
+                listData = serviceAPI.getAllData();
+              });
+            }
           },
           child: Icon(Icons.add),
         ),

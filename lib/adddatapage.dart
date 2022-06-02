@@ -1,6 +1,9 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'apiservices.dart';
 import 'dataclass.dart';
 
 class AddData extends StatefulWidget {
@@ -17,6 +20,8 @@ class _AddDataState extends State<AddData> {
   final TextEditingController _tfEmail = TextEditingController();
   final TextEditingController _tfPekerjaan = TextEditingController();
   final TextEditingController _tfQuote = TextEditingController();
+
+  Service serviceAPI = Service();
 
   @override
   Widget build(BuildContext context) {
@@ -85,7 +90,8 @@ class _AddDataState extends State<AddData> {
                         content: Text('Data Berhasil Ditambahkan'),
                       ),
                     );
-                    Navigator.pop(context, data);
+                    addData(data.cnama, data.cavatar, data.calamat, data.cemail, data.cpekerjaan, data.cquote);
+                    Navigator.pop(context,'1');
                   },
                   child: Text('Submit')),
               SizedBox(
@@ -102,5 +108,16 @@ class _AddDataState extends State<AddData> {
         ),
       ),
     );
+  }
+
+  void addData(String nama, String avatar, String alamat, String email,
+      String pekerjaan, String quote) async {
+    bool response = await serviceAPI.postData(
+        nama, avatar, alamat, email, pekerjaan, quote);
+    if (response == true) {
+      log("Data berhasil ditambahkan");
+    } else {
+      log("error = data gagal ditambahkan");
+    }
   }
 }

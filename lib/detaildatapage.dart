@@ -60,8 +60,8 @@ class _DetailState extends State<Detail> {
                     child: Padding(
                       padding: const EdgeInsets.fromLTRB(8.0, 0, 8, 0),
                       child: ElevatedButton(
-                        onPressed: () async {
-                          await Navigator.push(
+                        onPressed: () {
+                          Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
                               builder: (context) => EditData(data: widget.data),
@@ -77,7 +77,7 @@ class _DetailState extends State<Detail> {
                       padding: const EdgeInsets.fromLTRB(8.0, 0, 8, 0),
                       child: ElevatedButton(
                         onPressed: () {
-                          Navigator.pop(context);
+                          Navigator.pop(context, '1');
                         },
                         child: Text("Back"),
                       ),

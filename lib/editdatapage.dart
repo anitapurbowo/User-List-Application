@@ -5,6 +5,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'apiservices.dart';
 import 'dataclass.dart';
+import 'detaildatapage.dart';
 
 class EditData extends StatefulWidget {
   final cData data;
@@ -103,10 +104,20 @@ class _EditDataState extends State<EditData> {
                     );
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
-                        content: Text('Data Berhasil Dihapus'),
+                        content: Text('Data ${_tfNama.text} Berhasil Diedit'),
                       ),
                     );
-                    Navigator.pop(context);
+                    // Navigator.pop(context, widget.data);]
+                    cData isiData = cData(cid:widget.data.cid, cnama: _tfNama.text, cavatar: _tfAvatar.text,
+                    calamat: _tfAlamat.text, cemail: _tfEmail.text, cpekerjaan: _tfPekerjaan.text, cquote:_tfQuote.text   );
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) {
+                          return Detail(data: isiData);
+                        },
+                      ),
+                    );
                   },
                   child: Text('Submit')),
               SizedBox(
@@ -114,7 +125,14 @@ class _EditDataState extends State<EditData> {
               ),
               ElevatedButton(
                 onPressed: () {
-                  Navigator.pop(context);
+                  Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) {
+                          return Detail(data: widget.data);
+                        },
+                      ),
+                    );
                 },
                 child: Text("Back"),
               ),
