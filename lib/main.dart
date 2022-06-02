@@ -35,6 +35,7 @@ class _MyAppState extends State<MyApp> {
     listData = serviceAPI.getAllData();
   }
 
+  
   @override
   Widget build(BuildContext context) {
     final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
@@ -111,10 +112,10 @@ class _MyAppState extends State<MyApp> {
                                   Text("Quote : " + isiData[index].cquote),
                                 ],
                               ),
-                              onTap: ()  async {
+                              onTap: () async {
                                 showData(isiData[index].cid);
 
-                                final val =  await Navigator.push(
+                                await Navigator.push(
                                   context,
                                   MaterialPageRoute(
                                     builder: (context) {
@@ -122,11 +123,9 @@ class _MyAppState extends State<MyApp> {
                                     },
                                   ),
                                 );
-                                if (val == '1') {
-                                  setState(() {
-                                    listData = serviceAPI.getAllData();
-                                  });
-                                }
+                                setState(() {
+                                  listData = serviceAPI.getAllData();
+                                });
                               },
                               onLongPress: () {
                                 String nama = isiData[index].cnama;

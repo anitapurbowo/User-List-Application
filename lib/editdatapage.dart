@@ -28,6 +28,7 @@ class _EditDataState extends State<EditData> {
 
   @override
   Widget build(BuildContext context) {
+    final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
     _tfNama.text = widget.data.cnama;
     _tfAvatar.text = widget.data.cavatar;
     _tfAlamat.text = widget.data.calamat;
@@ -37,6 +38,7 @@ class _EditDataState extends State<EditData> {
     return MaterialApp(
       title: "Widget Catalog",
       home: Scaffold(
+        key: scaffoldKey,
         appBar: AppBar(
           title: Text("Edit Data Page"),
         ),
@@ -102,22 +104,35 @@ class _EditDataState extends State<EditData> {
                       _tfPekerjaan.text,
                       _tfQuote.text,
                     );
-                    ScaffoldMessenger.of(context).showSnackBar(
+
+                    cData isiData = cData(
+                        cid: widget.data.cid,
+                        cnama: _tfNama.text,
+                        cavatar: _tfAvatar.text,
+                        calamat: _tfAlamat.text,
+                        cemail: _tfEmail.text,
+                        cpekerjaan: _tfPekerjaan.text,
+                        cquote: _tfQuote.text);
+
+                    ScaffoldMessenger.of(scaffoldKey.currentContext!)
+                        .showSnackBar(
                       SnackBar(
                         content: Text('Data ${_tfNama.text} Berhasil Diedit'),
-                      ),
-                    );
-                    // Navigator.pop(context, widget.data);]
-                    cData isiData = cData(cid:widget.data.cid, cnama: _tfNama.text, cavatar: _tfAvatar.text,
-                    calamat: _tfAlamat.text, cemail: _tfEmail.text, cpekerjaan: _tfPekerjaan.text, cquote:_tfQuote.text   );
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) {
-                          return Detail(data: isiData);
+                        onVisible: () {
+                          Future.delayed(const Duration(milliseconds: 200), () {
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) {
+                                  return Detail(data: isiData);
+                                },
+                              ),
+                            );
+                          });
                         },
                       ),
                     );
+                    // Navigator.pop(context, widget.data);]
                   },
                   child: Text('Submit')),
               SizedBox(
@@ -126,13 +141,13 @@ class _EditDataState extends State<EditData> {
               ElevatedButton(
                 onPressed: () {
                   Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) {
-                          return Detail(data: widget.data);
-                        },
-                      ),
-                    );
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) {
+                        return Detail(data: widget.data);
+                      },
+                    ),
+                  );
                 },
                 child: Text("Back"),
               ),
@@ -161,7 +176,7 @@ class _EditDataState extends State<EditData> {
       pekerjaan,
       quote,
     );
-    
+
     if (response == true) {
       log("Data ${nama} berhasil di edit");
     } else {

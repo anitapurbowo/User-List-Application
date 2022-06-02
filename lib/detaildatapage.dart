@@ -2,26 +2,26 @@
 
 import 'package:flutter/material.dart';
 import 'package:networking/dataclass.dart';
+import 'package:networking/main.dart';
 import 'editdatapage.dart';
 
 class Detail extends StatefulWidget {
   final cData data;
 
-  const Detail({
-    Key? key,
-    required this.data
-  }) : super(key: key);
+  const Detail({Key? key, required this.data}) : super(key: key);
 
   @override
   State<Detail> createState() => _DetailState();
 }
 
 class _DetailState extends State<Detail> {
+  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: "Widget Catalog",
       home: Scaffold(
+        key: scaffoldKey,
         appBar: AppBar(
           title: Text("Detail Page"),
         ),
@@ -77,7 +77,7 @@ class _DetailState extends State<Detail> {
                       padding: const EdgeInsets.fromLTRB(8.0, 0, 8, 0),
                       child: ElevatedButton(
                         onPressed: () {
-                          Navigator.pop(context, '1');
+                          Navigator.pop(context);
                         },
                         child: Text("Back"),
                       ),
